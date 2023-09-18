@@ -1,49 +1,50 @@
 const dbModel = require("../models/model");
 const requestController = {};
 
+requestController.render = (req,res) => {
+  const results = dbModel.getAll()
+  res.status(200).render('index.ejs', {results})
+}
+
 requestController.getAll = (req, res) => {
-  const results = dbModel.getAll();
-  res.render("index.ejs", { results });
+  res.status(200).send(dbModel.getAll());
 };
 
 requestController.getOne = (req, res) => {
   const id = req.body.id;
-  console.log(id);
-  const results = dbModel.get(parseInt(id));
-  res.render("index.ejs", { results });
+  res.status(200).send(dbModel.getOne(id))
 };
 
 requestController.post = (req, res) => {
-  /*
-  gotta figure out why body is empty/where data is brought through. Should be through the body.
-   */
   try {
     const data = req.body.data;
     dbModel.post(data);
-
-    requestController.getAll(req, res);
+    res.status(200).send(dbModel.getAll());
   } catch (e) {
-    console.error(e);
-    res.status(403).send("סעמק");
+    res.status(500).json({ error: e });
   }
 };
 
 requestController.put = (req, res) => {
-  const id = req.body.id;
-  const data = req.body.data;
-  dbModel.put(id, data);
-
-  requestController.getAll(req, res);
+  try {
+    const id = req.body.id;
+    const data = req.body.data;
+    dbModel.put(id, data);
+    res.status(200).send(dbModel.getAll());
+  } catch (e) {
+    if (e === dbModel.nonValidKey) res.status(400).json({ error: e });
+    else res.status(500).json({ error: e });
+  }
 };
 
 requestController.delete = (req, res) => {
   try {
     dbModel.delete(req.body.id);
 
-    requestController.getAll(req, res);
+    res.status(200).send(dbModel.getAll());
   } catch (e) {
     console.error(e);
-    if (e.error === dbModel.nonValidKey) {
+    if (e=== dbModel.nonValidKey) {
       res.status(400).json(e.error);
     } else {
       res.status(500).json(e);

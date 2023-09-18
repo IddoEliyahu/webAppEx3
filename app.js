@@ -15,6 +15,6 @@ app.use(express.static(path.join(__dirname, 'views', 'scripts')))
 app.use(express.static(path.join(__dirname, 'node_modules', 'jQuery')))
 app.use('/data', route)
 
-app.get('/', controller.getAll )
+app.get('/', controller.render )
 
 app.listen(3000)

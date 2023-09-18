@@ -7,4 +7,5 @@ router.get('/', controller.getOne)
 router.post('/', controller.post)
 router.put('/', controller.put)
 router.delete('/', controller.delete)
+
 module.exports = router;

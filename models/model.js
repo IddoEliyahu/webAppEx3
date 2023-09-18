@@ -5,26 +5,28 @@ const db = {
     instrument1: "Drums",
     instrument2: "Nerves",
   },
-  4: "",
+  4: "What's up Hemi & Co.",
 };
 
 let count = Object.keys(db).length;
 
 const dbModel = {};
 
-const nonValidKey = "Key does not exist in the database"
+const nonValidKey = "Key does not exist in the database" 
 const validateId = (id) => {
   if (!db.hasOwnProperty(id))
-    throw { error: nonValidKey };
+    throw nonValidKey;
 };
 
 dbModel.nonValidKey = nonValidKey
+
 dbModel.getOne = (id) => {
   validateId(id);
   return db[id];
 };
 
 dbModel.getAll = () => {
+  console.log(db)
   return JSON.parse(JSON.stringify(db));
 };
 

@@ -29,30 +29,41 @@
         </div>
       </div>
     </div>
-    <form id="uploadForm">
-      <label for="request-type">Select Request Type:</label>
-      <select name="request-type" id="request-type">
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="DELETE">DELETE</option>
-      </select>
-      <br />
+    <form id="uploadForm" class="mb-4">
+      <div class="form-group mb-3">
+        <label for="request-type">Select Request Type:</label>
+        <select class="form-control" name="request-type" id="request-type">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+      </div>
 
-      <!-- <label for="request-body">Request Body:</label> -->
-      <textarea
-        name="request-body"
-        id="request-body"
-        rows="5"
-        cols="40"
-      ></textarea>
-      <textarea name="request-id" id="request-id" rows="1"></textarea>
-      <br />
+      <div class="form-group mb-3">
+        <label for="request-id">Request Key:</label>
+        <input
+          type="text"
+          class="form-control"
+          name="request-id"
+          id="request-id"
+        />
+      </div>
 
-      <button type="submit">Send Request</button>
+      <div class="form-group mb-3">
+        <label for="request-body">Request Value:</label>
+        <textarea
+          class="form-control"
+          name="request-body"
+          id="request-body"
+          rows="5"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Send Request</button>
     </form>
 
-    <div class="container">
+    <div>
       <h3 class="h3">Array Presentation</h3>
       <div class="container">
         <table class="table">

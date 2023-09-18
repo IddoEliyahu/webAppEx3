@@ -1,5 +1,3 @@
-if ($) console.log("Hello from index.js!");
-
 $(document).ready(() => {
   $("#uploadForm").submit((event) => {
     event.preventDefault();
@@ -10,22 +8,32 @@ $(document).ready(() => {
       data: $("#request-body").val(),
       id: $("#request-id").val(),
     };
-    console.log(resultsList)
+
+    $("#request-id").removeClass("is-invalid")
+
     $.ajax({
       type: requestType,
       url: "/data",
       data: formData,
       success: (res) => {
-        // $('#result').html('Response: ' + res);
-        const resultsList = $("results");
-        resultsList.empty();
-        // res.results.forEach((item) => {
-        //   resultsList.append($("<li>").text(item));
-        // });
+        console.log(res)
+        // $("#request-id").html(res)
+        $("#request-id")
+        window.location.reload()
+        
       },
-      error: (error) => {
-        console.error("Error:", error);
+      error: (jqXHR, textStatus, errorThrown) => {
+        console.error("Error:", errorThrown);
+        console.log(textStatus)
+        if (jqXHR.status === 400) {
+          // alert("The ID does not exist in the database.");
+          $("#request-id").addClass("is-invalid")
+        } else if (jqXHR.status === 500) {
+          alert("Server Error: Please try again later.");
+        } else {
+          alert("An unknown error occurred.");
+        }
       },
-    });
+    })
   });
 });
