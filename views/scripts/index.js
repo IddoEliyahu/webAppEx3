@@ -1,29 +1,31 @@
-if ($) console.log()
+if ($) console.log("Hello from index.js!");
 
 $(document).ready(() => {
-  $('#uploadForm').submit(event => {
+  $("#uploadForm").submit((event) => {
     event.preventDefault();
 
-    const formData = {
-      data: $('#inputData').val()
-    };
+    const requestType = $("#request-type").val();
 
+    const formData = {
+      data: $("#request-body").val(),
+      id: $("#request-id").val(),
+    };
+    console.log(resultsList)
     $.ajax({
-      type: `POST`,
-      url: '/data',
+      type: requestType,
+      url: "/data",
       data: formData,
-      success: res => {
+      success: (res) => {
         // $('#result').html('Response: ' + res);
-        const resultsList = $('results')
-        resultsList.empty()
-        res.results.forEach(item => {
-          resultsList.append($('<li>').text(item))
-        })
+        const resultsList = $("results");
+        resultsList.empty();
+        // res.results.forEach((item) => {
+        //   resultsList.append($("<li>").text(item));
+        // });
       },
-      error: error => {
-        console.error('Error:', error);
-      }
+      error: (error) => {
+        console.error("Error:", error);
+      },
     });
   });
 });
-

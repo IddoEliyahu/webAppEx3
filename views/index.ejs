@@ -14,13 +14,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body class="container">
-    <div class="card-header">
-      <h1 class="h1">Getman</h1>
-      <img
-        src="/green_picture.png"
-        alt="Image Description"
-        style="height: 200px; width: 200px"
-      />
+    <div class="card-header mx-4">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <img
+            src="/green_picture.png"
+            alt="Image Description"
+            style="height: 100px; width: 100px"
+            class="img-fluid rounded-circle"
+          />
+        </div>
+        <div class="col">
+          <h1 class="h1 mb-0">Getman</h1>
+        </div>
+      </div>
     </div>
     <form id="uploadForm">
       <label for="request-type">Select Request Type:</label>
@@ -32,27 +39,39 @@
       </select>
       <br />
 
-      <label for="request-body">Request Body:</label>
+      <!-- <label for="request-body">Request Body:</label> -->
       <textarea
         name="request-body"
         id="request-body"
         rows="5"
         cols="40"
       ></textarea>
+      <textarea name="request-id" id="request-id" rows="1"></textarea>
       <br />
 
       <button type="submit">Send Request</button>
     </form>
 
-    <div class="">
+    <div class="container">
       <h3 class="h3">Array Presentation</h3>
-      <ul class="list-group" id="results">
-        <% results.forEach(item => { %>
-        <li class="alert alert-info list-group-item">
-          <%= JSON.stringify(item) %>
-        </li>
-        <% }); %>
-      </ul>
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const key in results) { %>
+            <tr>
+              <td><%= key %></td>
+              <td><%= JSON.stringify(results[key]) %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <script

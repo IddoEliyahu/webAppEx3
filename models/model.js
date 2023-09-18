@@ -1,54 +1,45 @@
-const db = [
-  { id: 1, name: 'Iddo Eliyahu' },
-  { id: 2, food: 'Pizza' },
-  { id: 3, instrument: 'Drums' }
-];
-const dbModel = {};
-let count = 3
+const db = {
+  1: "Iddo Eliyahu",
+  2: "Pizza",
+  3: {
+    instrument1: "Drums",
+    instrument2: "Nerves",
+  },
+  4: "",
+};
 
-dbModel.get = (id = '') => {
-  console.log('got to get in model')
-  if (id === '') return db.map(x => x) // return a copy of the array so it won't be accessed outside of here
-  try {
-    return db.filter(data => data['id'] === id)[0]
-  } catch (e) {
-    if (id < 0 || id > count) { throw 'ID out of bound' }
-    else if (typeof id == Number) { throw 'Object has been deleted' }
-    else { throw e }
-  }
-}
+let count = Object.keys(db).length;
+
+const dbModel = {};
+
+const nonValidKey = "Key does not exist in the database"
+const validateId = (id) => {
+  if (!db.hasOwnProperty(id))
+    throw { error: nonValidKey };
+};
+
+dbModel.nonValidKey = nonValidKey
+dbModel.getOne = (id) => {
+  validateId(id);
+  return db[id];
+};
+
+dbModel.getAll = () => {
+  return JSON.parse(JSON.stringify(db));
+};
 
 dbModel.post = (data) => {
-  db.push({ id: ++count, ...data })
-}
+  db[++count] = data;
+};
 
 dbModel.delete = (id) => {
-  const temp = [];
-  const length = db.length;
-  for (let i = 0; i < length; i++) {
-    const obj = db.pop()
-    if (obj.id !== id) {
-      temp.push(obj)
-    }
-  }
-  temp.forEach(obj => {
-    db.push(obj)
-  })
-}
+  validateId(id);
+  delete db[id];
+};
 
 dbModel.put = (id, data) => {
-  try {
-    const object = db.filter(obj => obj.id === id)[0]
-    Object.keys(object).forEach(property => {
-      if (property !== 'id') delete object[property]
-    })
-    Object.keys(data).forEach(property => {
-      if (property !== 'id') object[property] = data[property]
-    })
-  } catch (e) {
-    console.log(e)
-    return e;
-  }
-}
+  validateId(id);
+  db[id] = data;
+};
 
 module.exports = dbModel;

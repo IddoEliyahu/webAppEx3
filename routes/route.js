@@ -3,9 +3,8 @@ const router = express.Router();
 const controller = require('../controllers/controller')
 
 router.get('/', controller.getAll)
-
-router.get('/data', controller.getAll)
-router.get('/data/:id', controller.getOne)
-router.post('/data', controller.post)
-
+router.get('/', controller.getOne)
+router.post('/', controller.post)
+router.put('/', controller.put)
+router.delete('/', controller.delete)
 module.exports = router;
